@@ -24,7 +24,7 @@ export const fetchComments = () => (dispatch) => {
     .then((comments) => dispatch(addComments(comments)))
     .catch((error) => dispatch(commentsFailed(error.message)));
 };
-
+//non thunk action creator functions
 export const commentsFailed = (errMess) => ({
   type: ActionTypes.COMMENTS_FAILED,
   payload: errMess,
@@ -163,3 +163,21 @@ export const addFavorite = campsiteId => ({
   type: ActionTypes.ADD_FAVORITE,
   payload: campsiteId
 });
+export const postComment = (campsiteId, rating, author, text) => dispatch => {
+  const date = new Date();
+  const newComment = {
+    campsiteId,
+    rating,
+    author,
+    text,
+    date: date.toISOString()
+  };
+  setTimeout(() => {
+    dispatch(addComment(newComment));
+  }, 2000);
+}
+export const addComment = comment => ({
+  type: ActionTypes.ADD_COMMENT,
+  payload: comment
+})
+
