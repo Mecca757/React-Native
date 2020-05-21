@@ -24,7 +24,7 @@ export const fetchComments = () => (dispatch) => {
     .then((comments) => dispatch(addComments(comments)))
     .catch((error) => dispatch(commentsFailed(error.message)));
 };
-//non thunk action creator functions
+
 export const commentsFailed = (errMess) => ({
   type: ActionTypes.COMMENTS_FAILED,
   payload: errMess,
@@ -154,30 +154,34 @@ export const addPartners = (partners) => ({
   type: ActionTypes.ADD_PARTNERS,
   payload: partners,
 });
-export const postFavorite = campsiteId => dispatch => {
+export const postFavorite = (campsiteId) => (dispatch) => {
   setTimeout(() => {
     dispatch(addFavorite(campsiteId));
   }, 2000);
 };
-export const addFavorite = campsiteId => ({
+export const addFavorite = (campsiteId) => ({
   type: ActionTypes.ADD_FAVORITE,
-  payload: campsiteId
+  payload: campsiteId,
 });
-export const postComment = (campsiteId, rating, author, text) => dispatch => {
-  const date = new Date();
+export const postComment = (campsiteId, rating, author, text) => (dispatch) => {
   const newComment = {
     campsiteId,
     rating,
     author,
     text,
-    date: date.toISOString()
   };
+  newComment.date = new Date().toISOString();
+
   setTimeout(() => {
     dispatch(addComment(newComment));
   }, 2000);
-}
-export const addComment = comment => ({
+};
+export const addComment = (comment) => ({
   type: ActionTypes.ADD_COMMENT,
-  payload: comment
-})
+  payload: comment,
+});
 
+export const deleteFavorite = (campsiteId) => ({
+  type: ActionTypes.DELETE_FAVORITE,
+  payload: campsiteId,
+});
